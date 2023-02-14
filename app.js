@@ -7,7 +7,9 @@ const getData = user_id => {
     return new Promise( async (resolve, reject) => {
         if( typeof(user_id) == "number" ){
             let { data: user } = await axios("https://jsonplaceholder.typicode.com/users/" + user_id)
+                .catch( e => reject(e.axiosError))
             let { data: userPosts } = await axios("https://jsonplaceholder.typicode.com/posts?userId=" + user_id)
+                .catch( e => e.axiosError)
             user.posts = userPosts
             resolve(user)
         }else{
